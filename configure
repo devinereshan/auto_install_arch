@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Configures a freshly pacstrapped system.
+# After running ./base_install from live medium, enter the following
+# to complete installation:
+#   arch-chroot /mnt
+#   curl https://raw.githubusercontent.com/devinereshan/auto_install_arch/master/configure > configure
+#   chmod u+x configure
+#   ./configure
+#
+# Then follow the prompts on screen
+
 # $1 = string to refer to user whose password is being entered
 # $2 = variable to store the new password in
 function getPassword() {
@@ -49,51 +59,6 @@ do
     status=$?
 done
 
-
-timedatectl set-ntp true
-
-# partition the disk
-cat <<EOF | fdisk /dev/sda
-o
-n
-p
-
-
-+512M
-n
-p
-
-
-
-w
-EOF
-partprobe
-
-# Ensure necessary modules are loaded
-modprobe dm-crypt
-modprobe dm-mod
-
-# Create encrypted partition
-cryptsetup -y -v luksFormat -s 512 -h sha512 /dev/sda2
-cryptsetup open /dev/sda2 cryptroot
-
-# make filesystems
-mkfs.ext4 /dev/sda1
-mkfs.ext4 /dev/mapper/cryptroot
-
-# Mount the partitions
-mount /dev/mapper/cryptroot /mnt
-
-mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
-
-# Install os
-pacstrap /mnt base linux linux-firmware vim man-db man-pages texinfo
-
-# create fstab
-genfstab -U /mnt >> /mnt/etc/fstab
-
-arch-chroot /mnt
 
 # Make swapfile
 dd if=/dev/zero of=/swapfile bs=1M count=2048 status=progress
