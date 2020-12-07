@@ -108,8 +108,8 @@ grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # update grub config for microcode updates on fallback image. Uncomment line that applies:
-sed -i "s/initrd\t\/initramfs-linux-fallback.img/initrd\t\/intel-ucode.img \/initramfs-linux-fallback.img/" /boot/grub/grub.cfg
-sed -i "s/initrd\t\/initramfs-linux-fallback.img/initrd\t\/amd-ucode.img \/initramfs-linux-fallback.img/" /boot/grub/grub.cfg
+#sed -i "s/initrd\t\/initramfs-linux-fallback.img/initrd\t\/intel-ucode.img \/initramfs-linux-fallback.img/" /boot/grub/grub.cfg
+#sed -i "s/initrd\t\/initramfs-linux-fallback.img/initrd\t\/amd-ucode.img \/initramfs-linux-fallback.img/" /boot/grub/grub.cfg
 
 # Create user
 useradd -m -G wheel -s /usr/bin/zsh $username
