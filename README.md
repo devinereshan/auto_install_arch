@@ -11,3 +11,13 @@
 # ./configure
 ```
 
+```
+# exit
+# umount /mnt/boot
+# umount /mnt
+# cryptsetup close cryptroot
+# reboot
+# ufw enable
+# systemctl enable NetworkManager
+# systemctl start NetworkManager
+```
