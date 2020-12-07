@@ -91,7 +91,7 @@ mount /dev/sda1 /mnt/boot
 pacstrap /mnt base linux linux-firmware vim man-db man-pages texinfo
 
 # create fstab
-genfstab -U /imnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt
 
