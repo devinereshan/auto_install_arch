@@ -85,7 +85,7 @@ printf "127.0.0.1\tlocalhost\n::1\t\tlocalhost\n127.0.1.1\t${hostname}.localdoma
 printf "root:${root_pass}\n" | chpasswd
 
 # Install some more packages
-pacman --noconfirm -S grub networkmanager network-manager-applet linux-headers base-devel dosfstools mtools os-prober git ufw zsh
+pacman --noconfirm -S grub networkmanager network-manager-applet linux-headers base-devel dosfstools mtools os-prober git ufw zsh curl ntp
 
 # uncomment depending on hardware:
 #pacman -S amd-ucode
