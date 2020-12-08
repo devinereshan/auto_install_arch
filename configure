@@ -92,13 +92,16 @@ pacman --noconfirm -S grub networkmanager network-manager-applet linux-headers b
 #pacman -S intel-ucode
 
 # Configure grub for encryption and SSD TRIM
-# just assume TRIM support for now. Check before running script
+# Just assume TRIM support for now. Check before running script
 root_uuid=$(lsblk -f | grep sda2 | gawk '{print $4}')
 
+# Uncomment this line if no TRIM support
+# sed -i "s/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${root_uuid}:cryptroot root=\/dev\/mapper\/cryptroot\"/" /etc/default/grub
+
+# Comment out this line if no TRIM support
 sed -i "s/GRUB_CMDLINE_LINUX=\"\"/GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=${root_uuid}:cryptroot:allow-discards root=\/dev\/mapper\/cryptroot\"/" /etc/default/grub
 
 # Configure mkinitcpio
-
 sed -i "s/^HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/HOOKS=(base udev autodetect modconf block encrypt filesystems keyboard keymap fsck)/" /etc/mkinitcpio.conf
 
 mkinitcpio -p linux
